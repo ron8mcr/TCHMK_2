@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include <iostream>
-#include "IbigInt.h"
 typedef unsigned int digit;
 typedef long long int longDigit;
 typedef unsigned long long int unsLongDigit;
@@ -15,30 +14,14 @@ typedef unsigned long long int unsLongDigit;
 
 #define DIVISION_BY_ZERO 1
 
-class bigInt : public IbigInt
+class bigInt
 {
 public:
 	bigInt();
 	bigInt(const char* string);
 	bigInt(const bigInt &rhv);
 	bigInt(long long int value);
-	virtual ~bigInt();
-	virtual void release();
-
-	static bigInt* CreateInstance()
-	{
-		return new bigInt;
-	}
-
-	static bigInt* CreateInstanceString(const char* string)
-	{
-		return new bigInt(string);
-	}
-
-	static bigInt* CreateInstanceVal(long long int val)
-	{
-		return new bigInt(val);
-	}
+	~bigInt();
 
 	char* getString();
 	bool getFromTextFile(const char* filename);
@@ -51,7 +34,6 @@ public:
 	bigInt& operator=(const longDigit value);
 
 	bigInt operator+(const bigInt& right) const;
-
 	bigInt operator-() const;
 	bigInt operator-(const bigInt& right) const;
 	bigInt operator*(const bigInt& right) const;
@@ -65,7 +47,7 @@ public:
 	bigInt operator/=(const bigInt& right);
 	bigInt operator%=(const bigInt& right);
 
-	bigInt* operator++();
+	bigInt operator++();
 	bigInt operator++(int);
 	bigInt operator--();
 	bigInt operator--(int);
@@ -111,24 +93,3 @@ const bigInt _divColumn(const bigInt& A, const bigInt& B, bigInt &remainder);
 const bigInt _divBinSearch(const bigInt& A, const bigInt& B, bigInt &remainder);
 
 const bigInt pow(const bigInt& A, const bigInt& B, bigInt& modulus);
-
-
-
-extern "C" IbigInt* CreatebigInt();
-extern "C" IbigInt* CreatebigIntString(const char* string);
-extern "C" IbigInt* CreatebigIntVal(long long int value);
-
-IbigInt* CreatebigInt()
-{
-	return bigInt::CreateInstance();
-}
-
-IbigInt* CreatebigIntString(const char* string)
-{
-	return bigInt::CreateInstanceString(string);
-}
-
-IbigInt* CreatebigIntVal(long long int value)
-{
-	return bigInt::CreateInstanceVal(value);
-}

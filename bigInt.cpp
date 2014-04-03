@@ -4,17 +4,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-IbigInt::~IbigInt()
-{
-
-}
-
 bigInt::bigInt()
 {
-	_size = 1;
+	_size = 0;
 	_sign = 0;
-	_digits = new digit;
-	_digits[0] = 0;
+	_digits = NULL;
 }
 
 bigInt::bigInt(const char* string)
@@ -101,14 +95,10 @@ bigInt::~bigInt()
 	if (_size) delete[] _digits;
 }
 
-void bigInt::release()
-{
-	delete this;
-}
-
 
 char* bigInt::getString()
 {// возвращает строку, в которой записано число в 10-ричной системе счисления
+
 	bigInt thisNumber = *this;
 	thisNumber._sign = 0;
 	char* strBuffer = new char[MAX_10_LEN]();	// здесь закралось ограничение
@@ -146,6 +136,7 @@ char* bigInt::getString()
 	char* string = new char[strlen(pString) + 1]();
 	strcpy(string, pString);
 	delete[] strBuffer;
+
 	return string;
 }
 
@@ -250,8 +241,6 @@ bigInt bigInt::operator+(const bigInt& right) const
 	return tmp;
 }
 
-
-
 bigInt bigInt::operator-() const
 {// унарный минус
 	bigInt res(*this);
@@ -324,11 +313,11 @@ bigInt bigInt::operator%=(const bigInt& right)
 }
 
 
-bigInt* bigInt::operator++()
+bigInt bigInt::operator++()
 {
 	bigInt oldVal = *this;
 	*this = *this + 1;
-	return new bigInt (oldVal);
+	return oldVal;
 }
 
 bigInt bigInt::operator++(int)

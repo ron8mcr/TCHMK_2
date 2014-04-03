@@ -1,3 +1,5 @@
-all:	
-	g++ -shared -fPIC bigInt.cpp -o bigInt.so
-	g++  main.cpp -ldl -o test
+all:
+	g++ -c -fPIC bigInt.cpp
+	g++ -shared -o libbigint.so bigInt.o
+	g++ -c main.cpp
+	g++ main.o -L. -lbigint -o res
