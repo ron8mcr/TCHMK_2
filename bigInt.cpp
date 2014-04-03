@@ -32,6 +32,7 @@ bigInt::bigInt(const char* string)
 	{
 		if (*pStr < '0' || *pStr > '9')
 		{
+			_size = 0;
 			delete[] strCpy;
 			_setSize(1);
 			return;
