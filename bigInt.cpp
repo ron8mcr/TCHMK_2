@@ -6,9 +6,10 @@
 
 bigInt::bigInt()
 {
-	_size = 0;
+	_size = 1;
 	_sign = 0;
-	_digits = NULL;
+	_digits = new digit[1];
+	_digits[0] = 0;
 }
 
 bigInt::bigInt(const char* string)
